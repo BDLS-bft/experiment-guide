@@ -1,3 +1,8 @@
+# Running Fabric-BDLS Experimental 
+
+For reference/Prereqs please check the the readme file in: 
+https://github.com/hyperledger/fabric-samples/blob/main/test-network-nano-bash/README.md
+
 # experiment-guide
 ![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/ac386ed8-4bbb-4217-8437-ec2e49049dce)
 
@@ -21,7 +26,10 @@ git checkout branch BDLS-RAFT-TPS-readyc
 git clonehttps://github.com/BDLS-bft/fabric-samples.git
 ```
 
+# Fabric
 ## Build new Orderer base on BDLS
+
+navigate to the fabric location the w cloned in `/home/ahmed/go/src/github.com/BDLS-bft/fabric`
 ```
 cd fabric
 rm -f build/bin/orderer & make orderer
@@ -33,4 +41,51 @@ Verfy the new Orderer binery
 
 ![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/1e460c03-883f-4ac9-9664-f8cec2754034)
 
+# Fabric-samples
+step out the Fabric directory `cd ..`. navigate into fabric-samples `cd fabric-samples`
+```
+pwd
+~/go/src/github.com/BDLS-bft/fabric-samples/
+```
+We are working on the `/test-network-nano-bash` test network project.
+
+1. Generate the network artifact
+```
+./generate_artifacts.sh BFT
+```
+![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/a689a995-77a7-4bc5-8fbc-cffb833fdd96)
+
+2. Run the Orderer nodes.
+
+open four terminal windows in the directory. rune:
+*  `./orderer1.sh BFT` in terminal one
+*  `./orderer2.sh BFT` in terminal two
+*  `./orderer3.sh BFT` in terminal three
+*  `./orderer4.sh BFT` in terminal four
+
+![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/03dca8fe-3e19-4095-9052-c7c9a251f079)
+
+The terminals output should look like this:
+![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/89438f21-f4d3-473a-9cea-f3d08d6d9870)
+
+Keep the four terminals running, we will continue work in other terminal.
+
+3. Join the network
+open new terminal window and type this commend to join the Orderers nodes.
+```
+./join_orderers.sh BFT
+```
+![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/89a45eec-f566-4865-b141-93ae03139f16)
+
+
+The benchmark test will trigger automaticly, navigate to the Orderers four windows 
+
+![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/3e947eab-2b20-4f2e-b0bc-78ce83c7612f)
+
+
+To change the Configuring the fabric sample network to run the network, in the `configtx.yaml` located in the `bft-config`, as `fabric-samples/test-network-nano-bash/bft-config`
+```
+test-network-nano-bash/bft-config/configtx.yaml
+```
+![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/42883214-956b-40ba-9651-431c17ef7e68)
 
