@@ -3,14 +3,20 @@
 For reference/Prereqs please check the the readme file in: 
 https://github.com/hyperledger/fabric-samples/blob/main/test-network-nano-bash/README.md
 
+**Note!** If you have not run Fabric before, I recommend starting to run Fabric using the Sample network. There are many guides I choose  [RunningFabricAndSamplesOnGitpod](https://github.com/ahmed82/LFX-CLP2023/blob/main/deepto/RunningFabricAndSamplesOnGitpod.md) 
+By Deepto.
+
 # experiment-guide
+For the experiment, we need two projects. One for Fabric source code and the second one for the test network. 
+
 ![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/ac386ed8-4bbb-4217-8437-ec2e49049dce)
 
 * Please verify Go Environment by run `go env`
 
 ![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/c1505f61-7339-4392-9f00-c37acdb33153)
 
-## Clone the repositories to the work space 
+## Clone the repositories
+Both repositories must be in the same directory level to avoid extra modification
 ```shell
 mkdir -R ~/go/src/github.com/BDLS-bft/
 ```
@@ -21,7 +27,7 @@ git checkout branch BDLS-RAFT-TPS-readyc
 ```
 ![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/026e3ca7-101c-4b3e-9565-3690d2c4c108)
 
-2. Clone Test Network repository:
+2. Clone Test fabric-samples repository:
 ```
 git clonehttps://github.com/BDLS-bft/fabric-samples.git
 ```
@@ -29,15 +35,15 @@ git clonehttps://github.com/BDLS-bft/fabric-samples.git
 # Fabric
 ## Build new Orderer base on BDLS
 
-navigate to the fabric location the w cloned in `/home/ahmed/go/src/github.com/BDLS-bft/fabric`
+Navigate to the fabric location the we cloned in `/home/ahmed/go/src/github.com/BDLS-bft/fabric`
 ```
 cd fabric
 rm -f build/bin/orderer & make orderer
 ```
 ![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/2c493ea2-fd7d-4009-b65d-580bd4f82fd5)
 
-Verfy the new Orderer binery
-* NOTE! make sure you build other binery as listed brlow if you have new environment 
+Verify the new Orderer binary
+* **NOTE!** Make sure you build other binary as listed below if you have a new environment 
 
 ![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/1e460c03-883f-4ac9-9664-f8cec2754034)
 
@@ -71,14 +77,14 @@ The terminals output should look like this:
 Keep the four terminals running, we will continue work in other terminal.
 
 3. Join the network
-open new terminal window and type this commend to join the Orderers nodes.
+Open a new terminal window and type this command to join the Orderers nodes.
 ```
 ./join_orderers.sh BFT
 ```
 ![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/89a45eec-f566-4865-b141-93ae03139f16)
 
 
-The benchmark test will trigger automaticly, navigate to the Orderers four windows 
+The benchmark test will trigger automatically, navigate to the Orderers four windows 
 
 ![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/3e947eab-2b20-4f2e-b0bc-78ce83c7612f)
 
