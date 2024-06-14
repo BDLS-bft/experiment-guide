@@ -18,7 +18,7 @@ For the experiment, we need two projects. One for Fabric source code and the sec
 ## Clone the repositories
 Both repositories must be in the same directory level to avoid extra modification
 ```shell
-mkdir -R ~/go/src/github.com/BDLS-bft/
+mkdir -p ~/go/src/github.com/BDLS-bft/
 ```
 1. Clone Fabric repository:
 ```
