@@ -1,8 +1,11 @@
 # Running Fabric with BDLS with test-network-nano-bash
-This is a guide to run Fabric with BDLS configured orderer using fabric-samples/`test-network-nano-bash`. 
+
+> Machine configuration: M1 Mac and is also tested to be working with Ubuntu 22.04 LTS version.
+
+This is a guide to run Fabric with BDLS configured orderer using `fabric-samples/test-network-nano-bash`. 
 
 ## Prerequisites
-Follow these guides to install prerequisites for running fabric on your machine. You might not need docker installed as we won't run test-network with docker. 
+Follow these guides to install prerequisites for running fabric on your machine. You will not need docker installed as we won't run test-network with docker. Also no need to install softHSM as we won't be running softHSM integration tests. 
 - [Prerequisites](https://hyperledger-fabric.readthedocs.io/en/release-2.5/prereqs.html)
 - [Setting up dev environment](https://hyperledger-fabric.readthedocs.io/en/latest/dev-setup/devenv.html)
 
@@ -12,37 +15,45 @@ Follow these guides to install prerequisites for running fabric on your machine.
 2. Get `fabric-samples` install script which we will use to clone latest `fabric-samples`, fabric binaries and configuration files. 
 
 ```shell
-curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/install-fabric.sh && chmod +x install-fabric.sh
+$ curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/install-fabric.sh && chmod +x install-fabric.sh
 ```
 
 2. Run this install script to get latest `fabric-samples` repository, fabric binaries in `fabric-samples/bin` and configuration files in `fabric-samples/config`
 
 ```shell
-./install-fabric.sh samples binary
+$ ./install-fabric.sh samples binary
 ```
 
 3. Change directory to `fabric-samples`. Edit the `externalBuilders` option inside `fabric-samples/config/configtx.yaml` file because of [this](https://github.com/hyperledger/fabric-samples/tree/main/test-network-nano-bash#to-run-the-chaincode-as-a-service).
 
 ```shell
-yq -i 'del(.chaincode.externalBuilders) | .chaincode.externalBuilders[0].name = "ccaas_builder" | .chaincode.externalBuilders[0].path = env(PWD) + "/builders/ccaas" | .chaincode.externalBuilders[0].propagateEnvironment[0] = "CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG"' config/core.yaml
+$ yq -i 'del(.chaincode.externalBuilders) | .chaincode.externalBuilders[0].name = "ccaas_builder" | .chaincode.externalBuilders[0].path = env(PWD) + "/builders/ccaas" | .chaincode.externalBuilders[0].propagateEnvironment[0] = "CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG"' config/core.yaml
 ```
 
+If you don't have `yq` then install using [this](https://github.com/mikefarah/yq?tab=readme-ov-file#macos--linux-via-homebrew) guide for your OS. 
+
 4. Also it is recommended to run configure external builders to run chaincode without docker. Here is [why](https://github.com/hyperledger/fabric-samples/tree/main/test-network-nano-bash#run-the-chaincode-without-docker)!
-```
-5. Change directory to `bdls-fabric` and clone `hyperledger-labs/bdls` renamed as `fabric`. 
+
 ```shell
-git clone https://github.com/hyperledger-labs/bdls fabric
+$ cd test-network-nano-bash
+$ ./configureExternalBuilders.sh
+```
+5. Change directory to `fabric-bdls` and clone `hyperledger-labs/bdls` renamed as `fabric`. 
+```shell
+$ git clone https://github.com/hyperledger-labs/bdls fabric
 ```
 
 6. Change directory to `fabric-bdls/fabric` and make sure you're on `BDLS-RAFT-TPS-readyc` branch. Now we will make new fabric binaries including `orderer` which incorporates BDLS protocol as BFT consensus protocol. Run following commands inside `fabric-bdls/fabric` repository. 
 ```shell
-make configtxlator configtxgen cryptogen orderer osnadmin peer discover ledgerutil                 
+$ make configtxlator configtxgen cryptogen orderer osnadmin peer discover ledgerutil                 
 ```
 
-7. Change directory to `fabric-bdls/fabric-samples`. Comment out line 189-284 containing the `kafka` related configuration from `fabric-samples/config/orderer.yaml`. Also set `FABRIC_CFG_PATH` environment variable so that orderer can read the required configuration correctly. 
+7. Change directory to `fabric-bdls/fabric-samples`. Comment out (or delete) line [189-284] containing the `kafka` related configuration from `fabric-samples/config/orderer.yaml`. 
+
+Also set `FABRIC_CFG_PATH` environment variable so that orderer can read the required configuration correctly. 
 
 ```shell
-export FABRIC_CFG_PATH=`${PWD}/../config`
+$ export FABRIC_CFG_PATH=${PWD}/../config
 ```
 
 8. Edit the `fabric-samples/test-network-nano-bash/bft-config/configtx.yaml` file to re-configure the orderer parameters for BDLS. Use following values: 
