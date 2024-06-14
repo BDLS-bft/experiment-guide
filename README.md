@@ -24,7 +24,7 @@ mkdir -R ~/go/src/github.com/BDLS-bft/
 ```
 git clone https://github.com/BDLS-bft/fabric.git
 cd fabric
-git checkout branch BDLS-RAFT-TPS-readyc
+git checkout BDLS-RAFT-TPS-readyc
 ```
 ![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/026e3ca7-101c-4b3e-9565-3690d2c4c108)
 
