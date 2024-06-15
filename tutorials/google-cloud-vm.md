@@ -60,9 +60,8 @@ Tew options a or b.
 cd ../test-network-nano-bash/
 ```
 a.
-- cd to the `test-network-nano-bash` directory in each terminal window
 - In the first orderer terminal, run `./generate_artifacts.sh BFT` to generate crypto material (calls cryptogen) and application channel genesis block and configuration transactions (calls configtxgen). The artifacts will be created in the `crypto-config` and `channel-artifacts` directories.
-- In the four orderer terminals, run `./orderer1.sh`, `./orderer2.sh`, `./orderer3.sh`, `./orderer4.sh` respectively. If you are running BFT consensus then run  in the fourth orderer terminal also.
+- In the four orderer terminals, run `./orderer1.sh`, `./orderer2.sh`, `./orderer3.sh`, `./orderer4.sh` respectively.
 - Note that each orderer and peer write their data (including their ledgers) to their own subdirectory under the `data` directory
 - Open a different terminal and run `./join_orderers.sh BFT`.
 
