@@ -1,6 +1,6 @@
 # Running Fabric with BDLS with test-network-nano-bash
 
-> Machine configuration: M1 Mac and is also tested to be working with Ubuntu 22.04 LTS version.
+> Machine configuration: M1 Mac and is also tested to be working with Ubuntu 22.04 LTS version(amd-x86).
 
 This is a guide to run Fabric with BDLS configured orderer using `fabric-samples/test-network-nano-bash`. 
 
