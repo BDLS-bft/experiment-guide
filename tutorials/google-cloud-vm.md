@@ -47,13 +47,41 @@ edit Orderer
 *************************
 ```
 vi ~/.bashrc
- export FABRIC_CFG_PATH=${PWD}/../config
+export FABRIC_CFG_PATH=${PWD}/../config
 source ~/.bashrc
+```
+## Step 6 
+(Running the experimental)
 
+* We need at least 5 terminals to run the experimental.
+Running the comment from the diffrent terminals or tmux new session and splite the screen.
+Tew options a or b.
+```
 cd ../test-network-nano-bash/
+```
+a.
+- cd to the `test-network-nano-bash` directory in each terminal window
+- In the first orderer terminal, run `./generate_artifacts.sh BFT` to generate crypto material (calls cryptogen) and application channel genesis block and configuration transactions (calls configtxgen). The artifacts will be created in the `crypto-config` and `channel-artifacts` directories.
+- In the four orderer terminals, run `./orderer1.sh`, `./orderer2.sh`, `./orderer3.sh`, `./orderer4.sh` respectively. If you are running BFT consensus then run  in the fourth orderer terminal also.
+- Note that each orderer and peer write their data (including their ledgers) to their own subdirectory under the `data` directory
+- Open a different terminal and run `./join_orderers.sh BFT`.
+
+b.
+`tmux` use to create new session then split till you get five sessions.
+
+```
 tmux new -s mysession
 tmux split-window -v
 tmux select-pane -t 0
+```
+The uses like:
+```
+./generate_artifacts.sh BFT
+./orderer1.sh & tmux select-pane -t 1
+./orderer2.sh & tmux select-pane -t 2
+./orderer3.sh & tmux select-pane -t 3
+./orderer4.sh & tmux select-pane -t 4
+./join_orderers.sh BFT
 ```
 
 ![image](https://github.com/BDLS-bft/experiment-guide/assets/9446035/89b07b97-1abd-4a51-80b2-940744252734)
