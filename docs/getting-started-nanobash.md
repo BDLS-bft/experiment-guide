@@ -9,6 +9,18 @@ Follow these guides to install prerequisites for running fabric on your machine.
 - [Prerequisites](https://hyperledger-fabric.readthedocs.io/en/release-2.5/prereqs.html)
 - [Setting up dev environment](https://hyperledger-fabric.readthedocs.io/en/latest/dev-setup/devenv.html)
 
+Before you move onto next steps, make sure you have `build-essential` and `yq` correctly installed. You can install them using following command. 
+```shell
+$ sudo apt install build-essential
+$ sudo snap install yq
+```
+
+If your `yq` install using snap doesn't work, directly download the latest binary for your OS. For linux-x86 architecture:
+```shell
+wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq &&\
+    chmod +x /usr/bin/yq
+```
+
 ## Getting Started
 1. A working directory is required - for example, Go Developers use the $HOME/go/src/github.com/<your_github_userid> directory.  This is a Golang Community recommendation for Go projects. Create and change directory to `fabric-bdls` where we will work throughout this guide. 
 
